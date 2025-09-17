@@ -1,0 +1,20 @@
+# Ignore Python stuff
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Ignore virtual environments
+env/
+venv/
+
+# Ignore Django migrations (optional)
+*/migrations/*.pyc
+*/migrations/__pycache__/
+*/migrations/*.py
+
+# Ignore VS Code settings (if using)
+.vscode/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
