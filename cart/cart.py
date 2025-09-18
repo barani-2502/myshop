@@ -1,14 +1,13 @@
 from decimal import Decimal
-from urllib import self, request
 from django.conf import settings
 from shop.models import Product
 
-class Cart(self, request):
-    def __init__(self):
+class Cart(object):
+    def __init__(self, request):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-            cart = self.session[settings.CAR_SESSION_ID] = {}
+            cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
     def add(self, product, quantity=1, override_quantity=False):
@@ -20,10 +19,10 @@ class Cart(self, request):
             }
 
         if override_quantity:
-            self.cart[product_id]['quantity'] = [quantity]
+            self.cart[product_id]['quantity'] = quantity
         
         else:
-            self.cart[product_id]['quantity'] += [quantity]
+            self.cart[product_id]['quantity'] += quantity
         
         self.save()
 
@@ -38,7 +37,7 @@ class Cart(self, request):
 
     def __iter__(self):
         product_ids = self.cart.keys()
-        products = Product.objects.fiter(id__in=product_ids)
+        products = Product.objects.filter(id__in=product_ids)
 
         cart = self.cart.copy()
         for product in products:
