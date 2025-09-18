@@ -133,3 +133,5 @@ USE_THOUSAND_SEPARATOR = True
 NUMBER_GROUPING = (3,2,0)
 
 CART_SESSION_ID = 'cart'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
