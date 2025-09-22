@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from orders.models import Order
 
+import logging
+logger = logging.getLogger(__name__)
+
 gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
 
 def payment_process(request):
@@ -25,13 +28,18 @@ def payment_process(request):
             order.paid = True
             order.braintree_id = result.transaction.id
             order.save()
+            logger.info(f"payment successful for {order.id}")
             return redirect('payment:done')
+        
         else:
-            client_token = gateway.client_token.generate()
-            return render(request,
-                          'payment/process.html',
-                          {'order': order,
-                           'client_token': client_token})
+            logger.warning(f"Payment failed {result.transaction.status}")
+            return redirect('payment:canceled')
+    else:
+        client_token = gateway.client_token.generate()
+        return render(request,
+                        'payment/process.html',
+                        {'order': order,
+                        'client_token': client_token})
         
 def payment_done(request):
     return render(request, 'payment/done.html')
