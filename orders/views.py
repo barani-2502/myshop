@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
@@ -12,6 +11,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
+from weasyprint import HTML
 
 def order_create(request):
     cart = Cart(request)
@@ -42,6 +42,7 @@ def admin_order_detail(request, order_id):
     return render(request,
                   'admin/orders/order/detail.html',
                   {'order': order})
+
 
 @staff_member_required
 def admin_order_pdf(request, order_id):

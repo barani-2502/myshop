@@ -6,6 +6,7 @@ __pycache__/
 # Ignore virtual environments
 env/
 venv/
+wslenv/
 
 # Ignore Django migrations (optional)
 */migrations/*.pyc
@@ -19,6 +20,7 @@ venv/
 .DS_Store
 Thumbs.db
 
+# static and media files
 /static/
 /assets/
 /media/
